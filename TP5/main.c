@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /** 
  * Allocate memory for an array which can contain `size`
@@ -41,11 +42,12 @@ void free_integer_array(int* tab_to_free){
  * @return int - The size of the given array
  */
 int array_size(int* array_to_size) {
+  int size;
+  size = 0;
   if(array_to_size == NULL) {
     fprintf(stderr, "Cannot get the size of an empty array\n");
     return 0;
   }
-  int size = 0;
   while(array_to_size[size]!=-1){
     size++;
   }
@@ -63,6 +65,7 @@ void print_array(int* array_to_display) {
   for(i=0; i<size; i++){
     printf("%i ",array_to_display[i]);
   }
+  putchar('\n');
 }
 
 /**
@@ -73,7 +76,7 @@ void print_array(int* array_to_display) {
  * @return 1 if equals, 0 otherwise
  */
 int assert_array_equals(int* first_array, int* second_array) {
-  int i = 0;
+  int i;
   size_t first_size = array_size(first_array);
   size_t second_size = array_size(second_array);
   if(first_size == second_size){
@@ -89,8 +92,8 @@ int assert_array_equals(int* first_array, int* second_array) {
 
 /* Copy an array into a NEW array */
 int * copy_array(int * array) {
-  int i = 0;
-  int * new_array = NULL;
+  int i;
+  int *new_array;
 
   size_t size = array_size(array);
   new_array = allocate_integer_array(size);
@@ -104,12 +107,12 @@ int * copy_array(int * array) {
 
 /* */
 int* fill_array(void) {
-  int size = 0, i = 0;
+  int size; int i;
+  int* result_array;
 
   printf("Entrez une longueur pour le tableau : ");
   scanf("%d",&size);
 
-  int* result_array = NULL;
   result_array = allocate_integer_array(size);
 
   for(i=0; i<size; i++) {
@@ -122,8 +125,8 @@ int* fill_array(void) {
 }
 
 int* random_array(int size, int max_entry) {
-  int i = 0;
-  int* result_array = NULL;
+  int i;
+  int* result_array;
   result_array = allocate_integer_array(size);
 
   srand(time(NULL));
@@ -140,8 +143,8 @@ int* random_array(int size, int max_entry) {
  * Concat array
  */
 int* concat_array(int* first_array, int* second_array) {
-  int* result_array = NULL;
-  int size_first = 0, size_second = 0, i = 0, j = 0;
+  int* result_array;
+  int size_first; int size_second; int i; int j;
 
   size_first = array_size(first_array);
   size_second = array_size(second_array);
@@ -163,12 +166,13 @@ int* concat_array(int* first_array, int* second_array) {
  * Tri fusion verbeux : merge sorted array
  */
 int* merge_sorted_arrays(int* first_array, int* second_array) {
+  int first_array_lenght; int second_array_lenght; int i; int j; int k;
+  int* result_array;
+
   printf("\nMerge the two following arrays :\n");
   print_array(first_array);
   print_array(second_array);
 
-  int first_array_lenght, second_array_lenght, i, j, k;
-  int* result_array;
   j = k = 0;
   first_array_lenght = array_size(first_array);
   second_array_lenght = array_size(second_array);
@@ -207,10 +211,11 @@ int* merge_sorted_arrays(int* first_array, int* second_array) {
  * Tri fusion verbeux : split array
  */
 void split_array(int* array, int** first_result_array, int** second_result_array) {
+  int array_lenght; int first_result_array_lenght; int second_result_array_lenght;
+  int index_array; int index_sub_array;
+
   printf("\nSplit array in two parts :\n");
   print_array(array);
-
-  int array_lenght, first_result_array_lenght, second_result_array_lenght;
 
   array_lenght = array_size(array);
   first_result_array_lenght = array_lenght / 2;
@@ -219,9 +224,7 @@ void split_array(int* array, int** first_result_array, int** second_result_array
   *first_result_array = allocate_integer_array(first_result_array_lenght);
   *second_result_array = allocate_integer_array(second_result_array_lenght);
 
-  int index_array = 0, index_sub_array = 0;
-
-  for(index_sub_array = 0; index_sub_array < first_result_array_lenght; index_sub_array++, index_array++) {
+  for(index_sub_array = 0, index_array = 0; index_sub_array < first_result_array_lenght; index_sub_array++, index_array++) {
     *(*first_result_array + index_sub_array) = array[index_array];
   }
   *(*first_result_array + first_result_array_lenght ) = -1;
@@ -232,7 +235,6 @@ void split_array(int* array, int** first_result_array, int** second_result_array
   *(*second_result_array + second_result_array_lenght) = -1;
 
   print_array(*first_result_array);
-  putchar('\n');
   print_array(*second_result_array);
 }
 
@@ -240,7 +242,7 @@ void split_array(int* array, int** first_result_array, int** second_result_array
  * Tri fusion verbeux : merge sort
  */
 int* merge_sort(int* array) {
-  int* first_array = NULL, *second_array = NULL;
+  int* first_array; int *second_array;
 
   if(array_size(array) <= 1) {
     return array;
@@ -328,7 +330,6 @@ int main(int argc, char* argv[]){
 
   printf("\n\n");
   print_array(array);
-  putchar('\n');
   printf("Size of the array : %d\n",array_size(array));
   return 0;
 }
