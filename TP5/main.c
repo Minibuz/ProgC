@@ -90,22 +90,31 @@ int assert_array_equals(int* first_array, int* second_array) {
   return 0;
 }
 
-/* Copy an array into a NEW array */
-int * copy_array(int * array) {
+/**
+ * Copy an array in a new created array
+ * 
+ * @param array_to_copy
+ * @return An array which is the copy of the given one
+ */
+int * copy_array(int * array_to_copy) {
   int i;
   int *new_array;
 
-  size_t size = array_size(array);
+  size_t size = array_size(array_to_copy);
   new_array = allocate_integer_array(size);
 
   for(i = 0; i<=size; i++) {
-    new_array[i] = array[i];
+    new_array[i] = array_to_copy[i];
   }
 
   return new_array;
 }
 
-/* */
+/**
+ * Create an array filled with user input
+ * 
+ * @return Array created by the user
+ */
 int* fill_array(void) {
   int size; int i;
   int* result_array;
@@ -124,6 +133,13 @@ int* fill_array(void) {
   return result_array;
 }
 
+/**
+ * Create an array filled with random number betwenn 0 and max_entry
+ * 
+ * @param size
+ * @param max_entry
+ * @return Array created of the given size with the random numbers
+ */
 int* random_array(int size, int max_entry) {
   int i;
   int* result_array;
@@ -140,7 +156,11 @@ int* random_array(int size, int max_entry) {
 }
 
 /**
- * Concat array
+ * Concat two arrays into a new one
+ * 
+ * @param first_array
+ * @param second_array
+ * @return Array containing both of the arrays
  */
 int* concat_array(int* first_array, int* second_array) {
   int* result_array;
@@ -163,7 +183,11 @@ int* concat_array(int* first_array, int* second_array) {
 }
 
 /**
- * Tri fusion verbeux : merge sorted array
+ * Merge both arrays into a new array sorted
+ * 
+ * @param first_array
+ * @param second_array
+ * @return Array sorted with both of the given arrays
  */
 int* merge_sorted_arrays(int* first_array, int* second_array) {
   int first_array_lenght; int second_array_lenght; int i; int j; int k;
@@ -208,7 +232,11 @@ int* merge_sorted_arrays(int* first_array, int* second_array) {
 }
 
 /**
- * Tri fusion verbeux : split array
+ * Split arrays into two arrays
+ * 
+ * @param array
+ * @param first_result_array
+ * @param second_result_array
  */
 void split_array(int* array, int** first_result_array, int** second_result_array) {
   int array_lenght; int first_result_array_lenght; int second_result_array_lenght;
@@ -239,22 +267,27 @@ void split_array(int* array, int** first_result_array, int** second_result_array
 }
 
 /**
- * Tri fusion verbeux : merge sort
+ * Merge two sorted array recursively
+ * 
+ * @param array_to_sort
+ * @return Array sorted
  */
-int* merge_sort(int* array) {
+int* merge_sort(int* array_to_sort) {
   int* first_array; int *second_array;
 
-  if(array_size(array) <= 1) {
-    return array;
+  if(array_size(array_to_sort) <= 1) {
+    return array_to_sort;
   }
 
-  split_array(array,&first_array,&second_array);
+  split_array(array_to_sort,&first_array,&second_array);
 
   return merge_sorted_arrays(merge_sort(first_array),merge_sort(second_array));
 }
 
 /**
  * Main to test all of the functions, with multiples test for each of them.
+ * 
+ * Made by Léo Buzelin
  */
 int main(int argc, char* argv[]){
   int *tab_1 = NULL, *tab_2 = NULL, *tab_3 = NULL, *tab_4 = NULL, *tab_5 = NULL, *tab_6 = NULL, *tab_7 = NULL;
